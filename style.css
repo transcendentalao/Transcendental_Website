@@ -1,0 +1,1082 @@
+/* ==========================================================================
+   TRANSCENDENTAL – Folha de estilos
+   
+   Índice
+   1. Variáveis e reset
+   2. Estrutura geral (container, secções, tipografia)
+   3. Cabeçalho e navegação
+   4. Botões
+   5. Componentes (faixa, etiqueta, imagens, destaques, cartões, pacotes…)
+   6. Formulário
+   7. Rodapé
+   8. Responsividade (media queries, do maior para o menor ecrã)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIÁVEIS E RESET
+   ========================================================================== */
+
+:root {
+  /* Paleta de cores do site */
+  --cor-primaria: #5b21e0; /* roxo principal (botões, links ativos) */
+  --cor-primaria-escura: #43199b; /* roxo escuro (faixas e secções escuras) */
+  --cor-destaque: #e83fb4; /* rosa de destaque */
+  --cor-fundo-claro: #f4f1ff; /* lilás muito claro (fundos de secção) */
+  --cor-texto: #131627; /* texto principal */
+  --cor-texto-suave: #5d6075; /* texto secundário */
+  --cor-rodape: #0f1328; /* fundo do rodapé */
+  --cor-linha: #e8e6f2; /* linhas e bordas suaves */
+
+  /* Largura máxima do conteúdo e espaço lateral (cresce com o ecrã) */
+  --largura-maxima: 1400px;
+  --espaco-lateral: clamp(14px, 4vw, 32px);
+
+  color-scheme: light;
+  box-sizing: border-box;
+
+  /* Respeita o "notch" e a barra inferior dos telemóveis modernos */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Reset: remove margens/paddings por defeito e usa box-sizing consistente */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Poppins, system-ui, Arial, sans-serif;
+  color: var(--cor-texto);
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.7;
+  min-width: 280px; /* menor largura suportada */
+  overflow-wrap: break-word; /* evita que palavras compridas rebentem o layout */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Imagens e SVGs nunca ultrapassam a largura do contentor */
+img,
+svg {
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   2. ESTRUTURA GERAL
+   ========================================================================== */
+
+/* Contentor central: limita a largura a 1400px e centra o conteúdo */
+.container {
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 0 var(--espaco-lateral);
+}
+
+/* Secções da página */
+section {
+  padding: 70px 0;
+}
+
+.fundo-claro {
+  background: var(--cor-fundo-claro);
+}
+
+.fundo-roxo {
+  background: var(--cor-primaria-escura);
+  color: #fff;
+}
+
+/* Títulos: o tamanho cresce de forma fluida com a largura do ecrã */
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: clamp(26px, 3.2vw + 10px, 40px);
+}
+
+/* Título de secção (h2) */
+.titulo-secao {
+  font-size: clamp(24px, 2.4vw + 10px, 34px);
+}
+
+/* Variante menor para títulos de páginas internas */
+.titulo-menor {
+  font-size: clamp(24px, 2.2vw + 10px, 34px);
+}
+
+/* Cabeçalho centrado no topo de cada secção (etiqueta + título + subtítulo) */
+.cabecalho-secao {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+.cabecalho-secao p,
+.texto-suave {
+  color: var(--cor-texto-suave);
+  font-size: 13px;
+}
+
+.fundo-roxo .texto-suave {
+  color: #ddd6f5;
+}
+
+.texto-rosa {
+  color: var(--cor-destaque);
+}
+
+/* Layout em duas colunas (texto + imagem). Passa a uma coluna em ecrãs pequenos */
+.duas-colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 6vw, 120px);
+  align-items: center;
+}
+
+/* Grelhas genéricas de 3 e 4 colunas */
+.grelha-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.grelha-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+/* ==========================================================================
+   3. CABEÇALHO E NAVEGAÇÃO
+   ========================================================================== */
+
+/* Cabeçalho fixo no topo ao fazer scroll */
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  background: #fff;
+  z-index: 9;
+  box-shadow: 0 1px 0 var(--cor-linha);
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 12px;
+}
+
+/* Logótipo (ícone + nome) */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: clamp(20px, 2vw + 12px, 24px);
+  color: var(--cor-texto);
+}
+
+.logo svg {
+  width: 26px;
+  height: 26px;
+  flex: none;
+}
+
+/* Menu de navegação (versão desktop: em linha) */
+nav {
+  display: flex;
+  gap: clamp(14px, 2vw, 28px);
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+nav a:hover,
+nav a.ativo {
+  /* .ativo = página atual (definido pelo JavaScript) */
+  color: var(--cor-destaque);
+}
+
+/* Menu "Serviços" com submenu ao passar o rato */
+.dropdown {
+  position: relative;
+}
+
+.dropdown > a::after {
+  content: "▾";
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+.dropdown div {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -12px;
+  background: #fff;
+  box-shadow: 0 8px 24px #0002;
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 170px;
+}
+
+.dropdown:hover div {
+  display: block;
+}
+
+.dropdown div a {
+  display: block;
+  padding: 6px 18px;
+}
+
+/* Botão "hambúrguer" – só aparece em ecrãs pequenos (ver secção 8) */
+#botao-menu {
+  display: none;
+  background: none;
+  border: 0;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   4. BOTÕES
+   ========================================================================== */
+
+.botao {
+  display: inline-block;
+  background: var(--cor-primaria);
+  color: #fff;
+  padding: 12px 26px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+}
+
+.botao.cinza {
+  background: #5f6579;
+}
+
+.botao.claro {
+  background: var(--cor-fundo-claro);
+  color: var(--cor-primaria);
+}
+
+/* Botão que ocupa a largura toda (usado nos cartões de preços) */
+.botao-bloco {
+  display: block;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* ==========================================================================
+   5. COMPONENTES
+   ========================================================================== */
+
+/* --- Faixa de título no topo de cada página interna --- */
+.faixa-titulo {
+  background: var(--cor-primaria-escura);
+  color: #fff;
+  padding: 14px 0;
+}
+
+.faixa-titulo .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* em ecrãs pequenos o "Início / Página" passa para baixo */
+  gap: 4px 16px;
+}
+
+.faixa-titulo h2 {
+  font-size: clamp(17px, 1vw + 13px, 20px);
+  font-weight: 600;
+}
+
+.faixa-titulo span {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* --- Etiqueta pequena (ex.: "Sobre nós") acima dos títulos --- */
+.etiqueta {
+  display: inline-block;
+  border: 1px solid var(--cor-primaria);
+  color: var(--cor-primaria);
+  border-radius: 20px;
+  padding: 0 12px;
+  font-size: 10px;
+  font-style: normal;
+  text-transform: uppercase;
+  line-height: 20px;
+  margin-bottom: 12px;
+}
+
+.fundo-roxo .etiqueta {
+  border-color: #fff;
+  color: #fff;
+}
+
+/* --- Placeholders (caixas de imagem ainda por preencher) --- */
+.placeholder {
+  border-radius: 10px;
+  min-height: 300px;
+  background: linear-gradient(135deg, #b9a4f7, #e83fb4 120%);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  color: #fff;
+  font-size: 12px;
+  position: relative;
+}
+
+.placeholder.roxo-escuro {
+  background: linear-gradient(135deg, #43199b, #8f6af0);
+}
+
+.placeholder.rosa {
+  background: linear-gradient(135deg, #f6b0dc, #a98af3);
+}
+
+.placeholder.topo {
+  min-height: 220px;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Placeholder vazio tracejado (secção Portfólio) */
+.placeholder.vazio {
+  background: #ebe6fb;
+  border: 1px dashed #c9bdf3;
+  min-height: 220px;
+}
+
+/* Placeholder com botão "play" ao centro */
+.placeholder.video::after {
+  content: "▶";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--cor-destaque);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* --- Imagens do site (proporção 4:5) --- */
+.imagem {
+  width: 70%;
+  max-width: 440px;
+  aspect-ratio: 4 / 5;
+  object-fit: fill;
+  border-radius: 10px;
+}
+
+/* Dentro de layouts de duas colunas a imagem fica encostada à direita */
+.duas-colunas > .imagem {
+  justify-self: end;
+}
+
+/* Foto no topo de um cartão de membro da equipa (cantos de cima redondos) */
+.imagem.topo {
+  border-radius: 8px 8px 0 0;
+}
+
+/* --- Destaque: ícone + título + texto --- */
+.destaque {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.destaque h3 {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.destaque p {
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+}
+
+.fundo-roxo .destaque p {
+  color: #ddd6f5;
+}
+
+/* Ícone redondo (✓, ✦) */
+.icone {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cor-destaque);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+}
+
+.icone.pequeno {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+}
+
+.icone.claro {
+  background: var(--cor-fundo-claro);
+  color: var(--cor-destaque);
+}
+
+/* --- Cartão branco com linhas separadas (secção "Os nossos valores") --- */
+.cartao {
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px 30px;
+  box-shadow: 0 2px 20px #5b21e014;
+}
+
+.cartao .linha {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--cor-linha);
+}
+
+.cartao .linha:last-child {
+  border: 0;
+}
+
+/* --- Grelha dos 8 serviços (4 colunas no desktop) --- */
+.grelha-servicos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #fff;
+  border-radius: 20px;
+  padding: 12px 30px;
+  box-shadow: 0 2px 20px #5b21e014;
+}
+
+.grelha-servicos .destaque {
+  padding: 26px 16px 26px 0;
+}
+
+/* --- Números em destaque (reservado, ainda não usado) --- */
+.numeros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 34px 0;
+}
+
+.numeros b {
+  font-size: 30px;
+  display: block;
+  line-height: 1.2;
+}
+
+.numeros small {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+/* --- Cartão de pacote de preços --- */
+.pacote {
+  border: 1px solid var(--cor-linha);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.pacote .pacote-topo {
+  background: var(--cor-fundo-claro);
+  padding: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pacote .pacote-corpo {
+  padding: 26px;
+}
+
+.pacote h3 {
+  font-size: 22px;
+}
+
+.pacote ul {
+  padding: 0;
+}
+
+.pacote li {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  font-size: 12.5px;
+  margin: 10px 0;
+}
+
+.preco {
+  font-size: clamp(28px, 2vw + 16px, 36px);
+  font-weight: 600;
+}
+
+.preco small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--cor-texto-suave);
+}
+
+/* --- Cartões da equipa e dos modelos --- */
+.equipa .nome-membro {
+  background: var(--cor-fundo-claro);
+  text-align: center;
+  padding: 12px;
+  border-radius: 0 0 8px 8px;
+}
+
+.equipa .nome-membro b {
+  font-weight: 500;
+  display: block;
+  font-size: 17px;
+}
+
+.equipa small {
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+}
+
+/* --- Lista de vagas (reservado, ainda não usado) --- */
+.vagas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.vagas a {
+  border: 1px solid var(--cor-linha);
+  border-radius: 8px;
+  padding: 18px;
+  font-size: 14px;
+  display: block;
+}
+
+.vagas em {
+  float: right;
+  font-style: normal;
+  font-size: 10px;
+  color: var(--cor-destaque);
+  background: #fdeaf6;
+  padding: 0 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.vagas small {
+  display: block;
+  color: var(--cor-texto-suave);
+  font-size: 11px;
+}
+
+.vagas u {
+  color: var(--cor-primaria);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+/* --- Passos ("Como trabalhamos"): 3 caixas lado a lado --- */
+.passos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--cor-linha);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.passos div {
+  padding: 26px;
+  border-right: 1px solid var(--cor-linha);
+}
+
+.passos div:last-child {
+  border: 0;
+}
+
+.passos h3 {
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.passos p {
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+}
+
+/* Variante dos passos sobre fundo roxo */
+.fundo-roxo .passos {
+  background: transparent;
+  border-color: #ffffff30;
+}
+
+.fundo-roxo .passos div {
+  border-color: #ffffff30;
+}
+
+.fundo-roxo .passos p {
+  color: #ddd6f5;
+}
+
+/* --- Perguntas frequentes (FAQ) --- */
+.pergunta {
+  border-bottom: 1px solid var(--cor-linha);
+  padding: 14px 0;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.resposta {
+  display: none; /* resposta escondida por defeito */
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+  padding-bottom: 14px;
+}
+
+.resposta.aberto {
+  /* .aberto é ativado ao clicar na pergunta */
+  display: block;
+}
+
+/* --- Bloco de chamada para ação (reservado, ainda não usado) --- */
+.chamada-acao {
+  background: var(--cor-fundo-claro);
+  border-radius: 14px;
+  padding: 44px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+/* --- Lista de logótipos de clientes (reservado, ainda não usado) --- */
+.logos-clientes {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  color: #9a9db0;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* --- Etiquetas pequenas em linha (reservado, ainda não usado) --- */
+.etiquetas span {
+  display: inline-block;
+  border: 1px solid var(--cor-destaque);
+  color: var(--cor-destaque);
+  font-size: 10px;
+  padding: 0 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  margin: 0 6px 8px 0;
+}
+
+/* --- Marcador amarelo (reservado, ainda não usado) --- */
+.destaque-amarelo {
+  background: #fff4c2;
+  color: #5a4a00;
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+/* --- Estatísticas (+300 clientes, +700 projectos…) --- */
+.estatisticas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.estatisticas b {
+  display: block;
+  font-size: clamp(28px, 2vw + 16px, 38px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.estatisticas small {
+  color: #ddd6f5;
+  font-size: 12.5px;
+}
+
+/* --- Lista de clientes em "chips" --- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.chips span {
+  background: var(--cor-fundo-claro);
+  color: var(--cor-primaria-escura);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+/* --- Abas da página de preços --- */
+.abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.abas button {
+  border: 1px solid var(--cor-linha);
+  background: #fff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.abas button.ativo {
+  background: var(--cor-primaria);
+  color: #fff;
+  border-color: var(--cor-primaria);
+}
+
+/* --- Tabela de preços em linhas (Design gráfico e Impressão) --- */
+.lista-precos > div {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  border-bottom: 1px solid var(--cor-linha);
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+.lista-precos span {
+  flex: 1;
+}
+
+.lista-precos b {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lista-precos small {
+  flex: 1.2;
+  color: var(--cor-texto-suave);
+  font-size: 11.5px;
+}
+
+/* ==========================================================================
+   6. FORMULÁRIO
+   ========================================================================== */
+
+form {
+  background: var(--cor-fundo-claro);
+  padding: clamp(18px, 4vw, 30px);
+  border-radius: 10px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  padding: 14px;
+  margin: 6px 0 18px;
+  font: inherit;
+  font-size: 12px;
+  background: #fff;
+}
+
+/* ==========================================================================
+   7. RODAPÉ
+   ========================================================================== */
+
+footer {
+  background: var(--cor-rodape);
+  color: #fff;
+  padding: 60px 0 24px;
+  font-size: 13px;
+}
+
+/* Grelha de 4 colunas do rodapé */
+.rodape-grelha {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.6fr;
+  gap: 30px;
+}
+
+footer h4 {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-size: 13px;
+}
+
+footer a {
+  display: block;
+  margin: 7px 0;
+  font-weight: 500;
+}
+
+/* Ligações das redes sociais (em linha) */
+.redes-sociais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.redes-sociais a {
+  display: inline;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ddd6f5;
+}
+
+/* Linha de direitos de autor */
+.direitos {
+  border-top: 1px solid #ffffff20;
+  margin-top: 40px;
+  padding-top: 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   8. RESPONSIVIDADE
+   Os valores abaixo vão do ecrã grande para o pequeno (max-width).
+   Cobertura: 280px (mínimo) até 1400px (máximo do contentor).
+   ========================================================================== */
+
+/* --- Portáteis pequenos / tablets na horizontal (até 1100px) --- */
+@media (max-width: 1100px) {
+  /* Os 8 serviços passam a 2 colunas */
+  .grelha-servicos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Cartões de preços: 2 colunas em vez de 3 */
+  .grelha-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Tablets (até 960px): menu passa a "hambúrguer" --- */
+@media (max-width: 960px) {
+  /* Mostra o botão do menu e esconde a navegação normal */
+  #botao-menu {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px var(--espaco-lateral);
+    gap: 12px;
+    box-shadow: 0 8px 20px #0002;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+  }
+
+  /* .aberto é ligado/desligado pelo botão do menu */
+  nav.aberto {
+    display: flex;
+  }
+
+  /* O submenu fica sempre visível, por baixo de "Serviços" */
+  .dropdown div {
+    display: block;
+    position: static;
+    box-shadow: none;
+    padding: 0 0 0 12px;
+  }
+
+  /* Equipa e rodapé: 2 colunas */
+  .grelha-4,
+  .rodape-grelha {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- Tablets na vertical e telemóveis grandes (até 860px) --- */
+@media (max-width: 860px) {
+  /* Tudo o que estava em colunas passa a uma única coluna */
+  .duas-colunas,
+  .grelha-3,
+  .grelha-servicos,
+  .chamada-acao,
+  .vagas,
+  .passos {
+    grid-template-columns: 1fr;
+  }
+
+  /* Imagem centrada quando está sozinha numa coluna */
+  .duas-colunas > .imagem {
+    justify-self: center;
+  }
+
+  /* Passos: linha horizontal em vez de coluna vertical entre caixas */
+  .passos div {
+    border: 0;
+    border-bottom: 1px solid var(--cor-linha);
+  }
+
+  .numeros {
+    gap: 22px;
+  }
+
+  section {
+    padding: 48px 0;
+  }
+
+  /* Estatísticas: 2 por linha */
+  .estatisticas {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Tabela de preços: valor e descrição passam para a linha de baixo */
+  .lista-precos > div {
+    flex-wrap: wrap;
+  }
+
+  .lista-precos small {
+    flex-basis: 100%;
+  }
+}
+
+/* --- Telemóveis (até 560px) --- */
+@media (max-width: 560px) {
+  /* Rodapé numa só coluna */
+  .rodape-grelha {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao {
+    padding: 6px 18px;
+  }
+
+  .grelha-servicos {
+    padding: 6px 18px;
+  }
+
+  .pacote .pacote-topo,
+  .pacote .pacote-corpo {
+    padding: 20px;
+  }
+
+  .chamada-acao {
+    padding: 24px;
+  }
+
+  footer {
+    padding-top: 44px;
+  }
+}
+
+/* --- Telemóveis pequenos (até 420px): equipa numa coluna --- */
+@media (max-width: 420px) {
+  .grelha-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .botao {
+    padding: 12px 18px;
+  }
+
+  .passos div {
+    padding: 20px;
+  }
+
+  .chips span {
+    padding: 5px 12px;
+  }
+}
+
+/* --- Ecrãs mínimos (até 340px, ex.: 280px) --- */
+@media (max-width: 340px) {
+  body {
+    font-size: 14px;
+  }
+
+  .estatisticas {
+    gap: 14px;
+  }
+
+  .estatisticas small {
+    font-size: 11.5px;
+  }
+
+  .abas button {
+    padding: 6px 12px;
+  }
+
+  .destaque {
+    gap: 10px;
+  }
+
+  .icone {
+    width: 36px;
+    height: 36px;
+  }
+
+  .icone.pequeno {
+    width: 20px;
+    height: 20px;
+  }
+}
